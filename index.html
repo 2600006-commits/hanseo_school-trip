@@ -4,126 +4,168 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>2026 한서고 2학년 제주 교육여행</title>
-<!-- 폰트 및 아이콘 -->
 <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-/* iOS Style CSS Variables */
+/* Fluid Typography & Box Sizing */
 :root {
-  --bg-gradient: linear-gradient(135deg, #f0f4f8 0%, #e0eaf5 100%);
-  --glass-bg: rgba(255, 255, 255, 0.65);
-  --glass-border: rgba(255, 255, 255, 0.8);
-  --content-bg: rgba(255, 255, 255, 0.55);
-  --card-bg: rgba(255, 255, 255, 0.8);
+  --fs-xs: clamp(12px, 3vw, 13px);
+  --fs-sm: clamp(13px, 3.5vw, 14.5px);
+  --fs-md: clamp(14px, 4vw, 15.5px);
+  --fs-lg: clamp(16px, 4.5vw, 18px);
+  --fs-xl: clamp(18px, 5vw, 20px);
+  
+  --radius-lg: 20px;
+  --radius-md: 16px;
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --timeline-line: rgba(0, 0, 0, 0.1);
+  --naver: #03c75a;
+  --google: #4285F4;
+}
+
+/* Light Theme (흰색) */
+[data-theme="light"] {
+  --bg-gradient: #f4f6f9;
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(200, 200, 200, 0.4);
+  --content-bg: rgba(255, 255, 255, 0.95);
+  --card-bg: #ffffff;
   --segment-bg: rgba(118, 118, 128, 0.12);
   --segment-active: #ffffff;
   --text-main: #1d1d1f;
   --text-sub: #6e6e73;
   --accent: #5e5ce6; 
   --danger: #ff3b30;
-  --naver: #03c75a;
-  --google: #4285F4;
-  --teacher-bg: rgba(255, 149, 0, 0.15);
+  --warning-bg: rgba(255, 59, 48, 0.08);
+  --teacher-bg: rgba(255, 149, 0, 0.1);
   --teacher-border: rgba(255, 149, 0, 0.3);
-  --timeline-line: rgba(0, 0, 0, 0.1);
-  --radius-lg: 24px;
-  --radius-md: 18px;
-  --shadow: 0 8px 32px rgba(31, 38, 135, 0.08);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg-gradient: linear-gradient(135deg, #1c1c1e 0%, #000000 100%);
-    --glass-bg: rgba(44, 44, 46, 0.65);
-    --glass-border: rgba(255, 255, 255, 0.15);
-    --content-bg: rgba(44, 44, 46, 0.5);
-    --card-bg: rgba(60, 60, 64, 0.6);
-    --segment-bg: rgba(118, 118, 128, 0.24);
-    --segment-active: #636366;
-    --text-main: #f5f5f7;
-    --text-sub: #98989d;
-    --accent: #5e5ce6;
-    --teacher-bg: rgba(255, 159, 10, 0.2);
-    --teacher-border: rgba(255, 159, 10, 0.4);
-    --timeline-line: rgba(255, 255, 255, 0.15);
-    --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  }
+/* Dark Theme (그레이 다크) */
+[data-theme="dark"] {
+  --bg-gradient: #1c1c1e;
+  --glass-bg: rgba(44, 44, 46, 0.85);
+  --glass-border: rgba(100, 100, 100, 0.2);
+  --content-bg: rgba(58, 58, 60, 0.9);
+  --card-bg: #2c2c2e;
+  --segment-bg: rgba(118, 118, 128, 0.24);
+  --segment-active: #636366;
+  --text-main: #f5f5f7;
+  --text-sub: #a1a1a6;
+  --accent: #6e6af6;
+  --danger: #ff453a;
+  --warning-bg: rgba(255, 69, 58, 0.15);
+  --teacher-bg: rgba(255, 159, 10, 0.15);
+  --teacher-border: rgba(255, 159, 10, 0.4);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --timeline-line: rgba(255, 255, 255, 0.15);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-body { font-family: 'PretendardVariable', -apple-system, sans-serif; background: var(--bg-gradient); background-attachment: fixed; color: var(--text-main); line-height: 1.5; padding-bottom: 80px; }
+body { 
+  font-family: 'PretendardVariable', -apple-system, sans-serif; 
+  background: var(--bg-gradient); 
+  color: var(--text-main); 
+  line-height: 1.5; 
+  padding-bottom: 80px; 
+  transition: background 0.3s ease, color 0.3s ease;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
 body.modal-open { overflow: hidden; } 
 .cite-hide { display: none; } /* 화면 출력 시 출처 숨김 처리 */
 
-.wrap { max-width: 600px; margin: 0 auto; padding: 0 16px; }
+.wrap { max-width: 600px; margin: 0 auto; padding: 0 4vw; }
 
+/* Header & Theme Toggle */
 header {
-  position: sticky; top: 0; z-index: 50; background: var(--glass-bg); backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--glass-border); padding: 16px 20px 12px; text-align: center;
+  position: sticky; top: 0; z-index: 50; background: var(--glass-bg); 
+  backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--glass-border); 
+  padding: 16px 4vw 12px; text-align: center; transition: background 0.3s, border 0.3s;
 }
-header h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
+.header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+header h1 { font-size: var(--fs-lg); font-weight: 800; margin: 0; }
 
-.segment-container { display: flex; background: var(--segment-bg); border-radius: 10px; padding: 3px; margin: 0 auto; max-width: 320px; }
-.segment-btn { flex: 1; padding: 8px 0; text-align: center; font-size: 14.5px; font-weight: 800; color: var(--text-main); border-radius: 8px; border: none; background: transparent; cursor: pointer; transition: all 0.25s; }
+.theme-toggle {
+  background: var(--segment-bg); color: var(--text-main); border: none;
+  padding: 6px 12px; border-radius: 20px; font-size: var(--fs-xs); font-weight: 700;
+  cursor: pointer; display: flex; align-items: center; gap: 6px; transition: background 0.2s;
+}
+
+.segment-container { display: flex; background: var(--segment-bg); border-radius: 10px; padding: 3px; margin: 0 auto; width: 100%; max-width: 340px; }
+.segment-btn { flex: 1; padding: 8px 0; text-align: center; font-size: var(--fs-sm); font-weight: 800; color: var(--text-main); border-radius: 8px; border: none; background: transparent; cursor: pointer; transition: all 0.25s; }
 .segment-btn.active { background: var(--segment-active); box-shadow: 0 3px 8px rgba(0,0,0,0.12); color: var(--accent); }
 
-.glass-card { background: var(--glass-bg); backdrop-filter: blur(16px) saturate(180%); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 24px; margin-top: 20px; box-shadow: var(--shadow); }
-.section-title { font-size: 20px; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+/* Common Cards */
+.glass-card { background: var(--glass-bg); backdrop-filter: blur(16px) saturate(180%); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 5vw; margin-top: 20px; box-shadow: var(--shadow); transition: background 0.3s; }
+.section-title { font-size: var(--fs-lg); font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
 
+.info-list { width: 100%; }
 .info-list li { display: flex; flex-direction: column; margin-bottom: 14px; }
 .info-list li:last-child { margin-bottom: 0; }
-.info-list .label { font-size: 13px; color: var(--text-sub); font-weight: 600; margin-bottom: 4px; }
-.info-list .value { font-size: 15.5px; font-weight: 700; word-break: keep-all; line-height: 1.4; }
+.info-list .label { font-size: var(--fs-xs); color: var(--text-sub); font-weight: 600; margin-bottom: 4px; }
+.info-list .value { font-size: var(--fs-md); font-weight: 700; line-height: 1.4; display: flex; justify-content: space-between; align-items: center; gap: 10px;}
 
+/* Timeline */
 .day-panel { display: none; animation: fadeIn 0.3s ease; }
 .day-panel.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-.timeline-item { display: flex; gap: 14px; margin-bottom: 20px; position: relative; }
+.timeline-item { display: flex; gap: 3vw; margin-bottom: 20px; position: relative; }
 .timeline-item:last-child { margin-bottom: 0; }
-.timeline-item::after { content: ''; position: absolute; left: 58px; top: 24px; bottom: -20px; width: 2px; background: var(--timeline-line); border-radius: 1px; }
+.timeline-item::after { content: ''; position: absolute; left: calc(48px + 1.5vw); top: 24px; bottom: -20px; width: 2px; background: var(--timeline-line); border-radius: 1px; }
 .timeline-item:last-child::after { display: none; }
-.timeline-item::before { content: ''; position: absolute; left: 55.5px; top: 10px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); z-index: 2; box-shadow: 0 0 0 3px var(--bg-gradient); }
-.time { width: 55px; font-size: 13.5px; font-weight: 800; color: var(--accent); text-align: right; flex-shrink: 0; padding-top: 3px; }
-.content { flex: 1; background: var(--content-bg); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--glass-border); }
-.content h4 { font-size: 16px; font-weight: 800; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; gap: 8px;}
-.content p { font-size: 13.5px; color: var(--text-sub); line-height: 1.4; word-break: keep-all; }
+.timeline-item::before { content: ''; position: absolute; left: calc(45.5px + 1.5vw); top: 10px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); z-index: 2; box-shadow: 0 0 0 3px var(--bg-gradient); }
 
-.detail-btn { background: var(--accent); color: white; border: none; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 800; cursor: pointer; flex-shrink: 0; }
-.btn-circle { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; text-decoration: none; font-size: 18px; background: var(--accent); flex-shrink: 0;}
+.time { width: 48px; font-size: var(--fs-sm); font-weight: 800; color: var(--accent); text-align: right; flex-shrink: 0; padding-top: 3px; }
+.content { flex: 1; background: var(--content-bg); padding: 4vw; border-radius: var(--radius-md); border: 1px solid var(--glass-border); min-width: 0;}
+.content h4 { font-size: var(--fs-md); font-weight: 800; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;}
+.content p { font-size: var(--fs-sm); color: var(--text-sub); line-height: 1.4; }
 
-.warning-box { background: rgba(255,59,48,0.1); padding: 16px; border-radius: 16px; border: 1px solid rgba(255,59,48,0.2); margin-top: 20px;}
-.teacher-box { background: var(--teacher-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--teacher-border); margin-top: 20px;}
+/* Buttons */
+.detail-btn { background: var(--accent); color: white; border: none; padding: 5px 12px; border-radius: 12px; font-size: var(--fs-xs); font-weight: 800; cursor: pointer; flex-shrink: 0; }
+.btn-circle { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #ffffff; text-decoration: none; font-size: 18px; background: var(--accent); flex-shrink: 0;}
 
-.action-card { display: flex; justify-content: space-between; align-items: center; padding: 16px; background: var(--card-bg); border-radius: var(--radius-md); border: 1px solid var(--glass-border); margin-bottom: 12px; }
-.action-card .info h4 { font-size: 15px; font-weight: 800; word-break: keep-all; }
-.action-card .info p { font-size: 13px; color: var(--text-sub); margin-top: 4px; }
+/* Warning Box Refined (Prohibited Items) */
+.warning-box { background: var(--warning-bg); padding: 5vw; border-radius: var(--radius-md); border: 1px solid rgba(255,59,48,0.3); margin-top: 20px;}
+.warning-box h4 { color: var(--danger); font-size: var(--fs-md); font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;}
 
-/* 다운로드 버튼 디자인 수정 */
-.btn-download { 
-  display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; 
-  padding: 16px; background: #1d1d1f; color: #ffffff; font-size: 16px; font-weight: 800; 
-  border-radius: 16px; text-decoration: none; margin-top: 20px; transition: transform 0.2s;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
-}
+.warning-grid { display: flex; flex-direction: column; gap: 12px; }
+.warning-item { display: flex; background: var(--card-bg); padding: 14px; border-radius: 12px; gap: 12px; align-items: center; border: 1px solid var(--glass-border); }
+.w-icon { font-size: 24px; flex-shrink: 0; }
+.w-text { flex: 1; min-width: 0; }
+.w-text b { display: block; font-size: var(--fs-sm); color: var(--danger); margin-bottom: 2px; }
+.w-text p { font-size: var(--fs-xs); color: var(--text-main); margin: 0; line-height: 1.3;}
+.warning-note { font-size: var(--fs-xs); color: var(--text-sub); margin-top: 12px; font-weight: 600; padding-left: 4px;}
+
+.teacher-box { background: var(--teacher-bg); padding: 5vw; border-radius: var(--radius-md); border: 1px solid var(--teacher-border); margin-top: 20px;}
+
+.action-card { display: flex; justify-content: space-between; align-items: center; padding: 4vw; background: var(--card-bg); border-radius: var(--radius-md); border: 1px solid var(--glass-border); margin-bottom: 12px; gap: 12px;}
+.action-card .info { min-width: 0; flex: 1; }
+.action-card .info h4 { font-size: var(--fs-sm); font-weight: 800; }
+.action-card .info p { font-size: var(--fs-xs); color: var(--text-sub); margin-top: 4px; }
+
+.btn-download { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 16px; background: var(--text-main); color: var(--bg-gradient); font-size: var(--fs-md); font-weight: 800; border-radius: 16px; text-decoration: none; margin-top: 20px; transition: transform 0.2s; box-shadow: 0 4px 14px rgba(0,0,0,0.1); }
 .btn-download:active { transform: scale(0.98); }
 @media (prefers-color-scheme: dark) {
   .btn-download { background: var(--accent); color: #ffffff; }
 }
 
 /* Modal */
-.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: flex; align-items: flex-end; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(4px); }
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: flex; align-items: flex-end; justify-content: center; z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; backdrop-filter: blur(4px); }
 .modal-overlay.open { opacity: 1; pointer-events: auto; }
-.modal-content { background: var(--card-bg); backdrop-filter: blur(20px) saturate(180%); width: 100%; max-width: 600px; border-radius: 24px 24px 0 0; padding: 30px 24px 40px; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.2); max-height: 85vh; overflow-y: auto; }
+.modal-content { background: var(--card-bg); width: 100%; max-width: 600px; border-radius: 24px 24px 0 0; padding: 30px 6vw 40px; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); box-shadow: 0 -10px 40px rgba(0,0,0,0.3); max-height: 85vh; overflow-y: auto; }
 .modal-overlay.open .modal-content { transform: translateY(0); }
 .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-.modal-header h3 { font-size: 22px; font-weight: 800; color: var(--text-main); }
-.close-btn { background: rgba(118, 118, 128, 0.2); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; font-weight: bold; color: var(--text-main); cursor: pointer; }
-.modal-body { font-size: 15px; color: var(--text-main); line-height: 1.6; margin-bottom: 24px; word-break: keep-all;}
+.modal-header h3 { font-size: var(--fs-xl); font-weight: 800; color: var(--text-main); }
+.close-btn { background: var(--segment-bg); border: none; width: 36px; height: 36px; border-radius: 50%; font-size: 18px; font-weight: bold; color: var(--text-main); cursor: pointer; display: flex; align-items: center; justify-content: center;}
+.modal-body { font-size: var(--fs-sm); color: var(--text-main); line-height: 1.6; margin-bottom: 24px; }
 .map-btn-group { display: flex; gap: 12px; }
-.map-btn { flex: 1; padding: 12px 0; border-radius: 12px; font-weight: 800; font-size: 14.5px; text-align: center; text-decoration: none; color: white; display: flex; justify-content: center; align-items: center; gap: 6px; }
+.map-btn { flex: 1; padding: 14px 0; border-radius: 12px; font-weight: 800; font-size: var(--fs-sm); text-align: center; text-decoration: none; color: white; display: flex; justify-content: center; align-items: center; gap: 6px; }
 .map-btn.naver { background: var(--naver); }
 .map-btn.google { background: var(--google); }
+
+footer { text-align: center; padding: 40px 0; font-size: var(--fs-xs); color: var(--text-sub); }
 
 /* Team Display Logic */
 .team-view { display: none; }
@@ -133,10 +175,13 @@ header h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
 [data-team="B"] span.team-view.team-b { display: inline; }
 </style>
 </head>
-<body>
+<body data-theme="light">
 
 <header>
-  <h1>2학년 소규모 테마형 교육여행 <span class="cite-hide">[cite: 7]</span></h1>
+  <div class="header-top">
+    <h1>2학년 교육여행 <span class="cite-hide">[cite: 7]</span></h1>
+    <button class="theme-toggle" id="theme-toggle">🌙 다크 모드</button>
+  </div>
   <div class="segment-container">
     <button class="segment-btn active" id="btn-team-a" onclick="setTeam('A')">A팀 (1,2,4,5반) <span class="cite-hide">[cite: 7]</span></button>
     <button class="segment-btn" id="btn-team-b" onclick="setTeam('B')">B팀 (3,6,7,8반) <span class="cite-hide">[cite: 7]</span></button>
@@ -150,13 +195,14 @@ header h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
     <ul class="info-list">
       <li><span class="label">여행 일자</span><span class="value">2026. 09. 07.(월) ~ 09. 09.(수) <span class="cite-hide">[cite: 7]</span></span></li>
       <li>
-        <span class="label">공항 집합 장소 및 시간</span>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <span class="value" style="color:var(--danger);">
+        <span class="label">공항 집합 장소 및 시간 (학생)</span>
+        <div class="value">
+          <span style="color:var(--danger);">
             김포공항 국내선 1층 롯데리아 앞<br>
-            오전 07:50 (A/B팀 동일, 시간 엄수)
+            <span class="team-view team-a">오전 08:00 (시간 엄수) <span class="cite-hide">[cite: 7]</span></span>
+            <span class="team-view team-b">오전 09:00 (시간 엄수) <span class="cite-hide">[cite: 7]</span></span>
           </span>
-          <button class="detail-btn" onclick="openModal('김포공항 롯데리아', '<b>집합장소:</b> 국내선 1층 롯데리아 앞<br><b>집합시간:</b> 오전 7시 50분까지 시간 엄수 부탁드립니다.')" style="padding: 6px 12px;">지도보기</button>
+          <button class="detail-btn" onclick="openModal('김포공항 롯데리아', '<b>집합장소:</b> 국내선 1층 롯데리아 앞<br><b>학생 집합시간:</b> A팀 08:00 / B팀 09:00<br><b>교사 집합시간:</b> 07:50 (A/B팀 공통)')">지도</button>
         </div>
       </li>
       <li>
@@ -171,7 +217,7 @@ header h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
       </li>
     </ul>
 
-    <!-- 올바르게 수정된 다운로드 버튼 -->
+    <!-- 안내 책자 다운로드 버튼 -->
     <a href="guidebook.pdf" download class="btn-download">
       <i class="fa-solid fa-file-pdf"></i> 안내 책자 다운로드 <span class="cite-hide">[cite: 7]</span>
     </a>
@@ -179,70 +225,92 @@ header h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
 
   <!-- 2. 교사 전용 안내 -->
   <div class="teacher-box">
-    <div class="section-title" style="color:#d56900; font-size: 18px;">👨‍🏫 인솔 교사 협조 사항</div>
-    <ul class="info-list" style="margin-bottom: 16px;">
-      <li><span class="label" style="color:#b25600;">차량 탑승 및 이동 지침</span>
-        <span class="value" style="font-size: 14.5px; font-weight: 500;">
-          • 차량 탑승 시: 안전요원과 함께 학생 인원 파악 및 <b>안전벨트 착용 확인 후 단톡방 공유</b><br>
-          • 코스 이동 시: 매 이동 시 출발 및 도착 상황 <b>단톡방 공유</b><br>
-          • 제주공항 도착 직후 반드시 배정된 차량을 확인 요망
+    <div class="section-title" style="color:#d56900;">👨‍🏫 인솔 교사 협조 사항</div>
+    <ul class="info-list" style="margin-bottom: 0;">
+      <li><span class="label" style="color:#b25600;">공통 집합 시간</span>
+        <span class="value" style="font-weight: 500; font-size: var(--fs-sm);">
+          • <b>오전 07:50까지</b> 롯데리아 앞 집합 완료 (A/B팀 교사 공통)
         </span>
       </li>
-      <li><span class="label" style="color:#b25600;">특정 학급 차량 탑승 배정</span>
-        <span class="value" style="font-size: 14.5px; font-weight: 500;">
-          이예준T (A팀 1반) / 교감T (B팀 3반) / 손영헌T (B팀 8반)
+      <li><span class="label" style="color:#b25600;">차량 탑승 및 이동 지침</span>
+        <span class="value" style="font-weight: 500; font-size: var(--fs-sm);">
+          • 탑승 시: 안전요원과 학생 인원/안전벨트 착용 확인 후 <b>단톡방 공유</b><br>
+          • 코스 이동 시: 출발/도착 상황 <b>단톡방 공유</b>
         </span>
+      </li>
+      <li><span class="label" style="color:#b25600;">탑승 학급 배정</span>
+        <span class="value" style="font-weight: 500; font-size: var(--fs-sm);">이예준T(A팀 1반), 교감T(B팀 3반), 손영헌T(B팀 8반)</span>
       </li>
       <li><span class="label" style="color:#b25600;">팀 리더십 및 권한</span>
-        <span class="value" style="font-size: 14.5px; font-weight: 500;">
-          • A팀 팀장: 하지영 선생님<br>
-          • B팀 팀장: 윤보라 선생님<br>
-          • 총괄 인솔자: 교감 선생님<br>
-          팀장은 일정을 책임지고 진행하며, 긴급 수정 시 총괄 인솔자(교감 선생님)와 상의 후 진행합니다.
+        <span class="value" style="font-weight: 500; font-size: var(--fs-sm);">
+          • A팀장: 하지영T / B팀장: 윤보라T / 총괄: 교감T<br>
+          긴급 수정 시 총괄 인솔자(교감T)와 상의 후 진행합니다.
         </span>
       </li>
     </ul>
   </div>
 
-  <!-- 3. 숙소 안내 -->
+  <!-- 3. 반입 금지 규정 (레이아웃 개선 적용) -->
+  <div class="warning-box">
+    <h4>🚨 항공기 반입 금지 물품 안내 <span class="cite-hide">[cite: 7]</span></h4>
+    <div class="warning-grid">
+      <div class="warning-item">
+        <span class="w-icon">🎒</span>
+        <div class="w-text">
+          <b>기내 반입 금지 (가져타는 짐) <span class="cite-hide">[cite: 7]</span></b>
+          <p>사무용 칼, 가위 등 날카로운 물품 <span class="cite-hide">[cite: 7]</span></p>
+        </div>
+      </div>
+      <div class="warning-item">
+        <span class="w-icon">🧳</span>
+        <div class="w-text">
+          <b>위탁 금지 (부치는 짐) <span class="cite-hide">[cite: 7]</span></b>
+          <p>보조배터리, 노트북, 아이패드 <span class="cite-hide">[cite: 7]</span></p>
+        </div>
+      </div>
+    </div>
+    <p class="warning-note">※ 보조배터리는 기내 소지만 가능하며 캐리어에 넣을 시 단속됩니다. <span class="cite-hide">[cite: 7]</span></p>
+  </div>
+
+  <!-- 4. 숙소 안내 -->
   <div class="glass-card">
     <div class="section-title">🏨 숙소 안내</div>
-    
     <!-- A팀 숙소 -->
     <ul class="info-list team-view team-a">
       <li>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="value">
           <div>
-            <span class="label">A팀 숙소 (1,2,4,5반 배정) <span class="cite-hide">[cite: 7]</span></span>
-            <span class="value">켄싱턴 리조트 중문점 <span class="cite-hide">[cite: 7]</span><br><span style="font-size:13px; font-weight:500; color:var(--text-sub);">서귀포시 중문관광로 72번길 29-29 <span class="cite-hide">[cite: 7]</span></span></span>
+            <span class="label">A팀 (1,2,4,5반 배정) <span class="cite-hide">[cite: 7]</span></span>
+            켄싱턴 리조트 중문점 <span class="cite-hide">[cite: 7]</span><br>
+            <span style="font-size:var(--fs-xs); font-weight:500; color:var(--text-sub);">서귀포시 중문관광로 72번길 29-29 <span class="cite-hide">[cite: 7]</span></span>
           </div>
-          <button class="detail-btn" onclick="openModal('켄싱턴 리조트 중문', '<b>연락처:</b> 064-738-9101 <span class=\'cite-hide\'>[cite: 7]</span><br><b>객실정보:</b> 4인 1실로 배정되며, 2일차 레크리에이션 진행 시 서귀포 켄싱턴 연회장으로 이동합니다. <span class=\'cite-hide\'>[cite: 7]</span>')" style="padding: 6px 12px;">자세히</button>
+          <button class="detail-btn" onclick="openModal('켄싱턴 리조트 중문', '<b>연락처:</b> 064-738-9101 <span class=\'cite-hide\'>[cite: 7]</span><br><b>객실정보:</b> 4인 1실로 배정되며, 2일차 레크리에이션 진행 시 서귀포 켄싱턴 연회장으로 이동합니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button>
         </div>
       </li>
     </ul>
-
     <!-- B팀 숙소 -->
     <ul class="info-list team-view team-b">
       <li>
-        <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div class="value">
           <div>
-            <span class="label">B팀 숙소 (3,6,7,8반 배정) <span class="cite-hide">[cite: 7]</span></span>
-            <span class="value">켄싱턴 리조트 서귀포점 <span class="cite-hide">[cite: 7]</span><br><span style="font-size:13px; font-weight:500; color:var(--text-sub);">서귀포시 이어도로 684 <span class="cite-hide">[cite: 7]</span></span></span>
+            <span class="label">B팀 (3,6,7,8반 배정) <span class="cite-hide">[cite: 7]</span></span>
+            켄싱턴 리조트 서귀포점 <span class="cite-hide">[cite: 7]</span><br>
+            <span style="font-size:var(--fs-xs); font-weight:500; color:var(--text-sub);">서귀포시 이어도로 684 <span class="cite-hide">[cite: 7]</span></span>
           </div>
-          <button class="detail-btn" onclick="openModal('켄싱턴 리조트 서귀포', '<b>연락처:</b> 064-739-9001 <span class=\'cite-hide\'>[cite: 7]</span><br><b>객실정보:</b> 4인 1실로 배정됩니다. 2일차 저녁 숙소 연회장에서 레크리에이션이 진행됩니다. <span class=\'cite-hide\'>[cite: 7]</span>')" style="padding: 6px 12px;">자세히</button>
+          <button class="detail-btn" onclick="openModal('켄싱턴 리조트 서귀포', '<b>연락처:</b> 064-739-9001 <span class=\'cite-hide\'>[cite: 7]</span><br><b>객실정보:</b> 4인 1실로 배정됩니다. 2일차 저녁 숙소 연회장에서 레크리에이션이 진행됩니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button>
         </div>
       </li>
     </ul>
   </div>
 
-  <!-- 4. 관광 일정 -->
+  <!-- 5. 관광 일정 -->
   <div class="glass-card">
     <div class="section-title">🗓 관광 일정</div>
     
     <div class="segment-container" style="margin-bottom: 20px;">
-      <button class="segment-btn day-btn active" data-day="1">1일차(9/7)</button>
-      <button class="segment-btn day-btn" data-day="2">2일차(9/8)</button>
-      <button class="segment-btn day-btn" data-day="3">3일차(9/9)</button>
+      <button class="segment-btn day-btn active" data-day="1">1일차</button>
+      <button class="segment-btn day-btn" data-day="2">2일차</button>
+      <button class="segment-btn day-btn" data-day="3">3일차</button>
     </div>
 
     <!-- 1일차 공통 -->
@@ -259,7 +327,7 @@ header h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
       </div></div>
       <div class="timeline-item"><div class="time">저녁</div><div class="content">
         <h4>석식 [제주돈돗] <button class="detail-btn" onclick="openModal('제주돈돗', '<b>메뉴:</b> 무한 숙성 솥뚜껑 바베큐 <span class=\'cite-hide\'>[cite: 7]</span><br><b>위치:</b> 서귀포시 안덕면 한창로 628 <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
-        <p>식사 후 숙소로 이동하여 개인 정비 <span class="cite-hide">[cite: 7]</span></p>
+        <p>식사 후 숙소로 이동하여 휴식 <span class="cite-hide">[cite: 7]</span></p>
       </div></div>
     </div>
 
@@ -268,22 +336,22 @@ header h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
       <!-- A팀 2일차 -->
       <div class="team-view team-a">
         <div class="timeline-item"><div class="time">오전</div><div class="content">
-          <h4>주상절리 <button class="detail-btn" onclick="openModal('제주 주상절리', '화산에서 분출한 용암이 식으면서 만들어낸 육각형 기둥 모양의 아름다운 해안 절경입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>주상절리 <button class="detail-btn" onclick="openModal('제주 주상절리', '화산 분출 후 육각형 기둥 모양으로 굳어진 아름다운 해안 절경입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오전</div><div class="content">
-          <h4>제주제트 <button class="detail-btn" onclick="openModal('제주제트', '안전조끼 착용이 필수이며, 주상절리 근처에서 스릴 있는 해상 액티비티를 체험합니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>제주제트 <button class="detail-btn" onclick="openModal('제주제트', '안전조끼 착용 필수! 주상절리 근처에서 스릴 있는 해상 액티비티를 체험합니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오후</div><div class="content">
           <h4>중식 [국수인가갈치인가] <button class="detail-btn" onclick="openModal('국수인가갈치인가', '<b>메뉴:</b> 삼색만두 + 고기국수 <span class=\'cite-hide\'>[cite: 7]</span><br><b>위치:</b> 서귀포시 성산읍 서성일로 913 <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오후</div><div class="content">
-          <h4>성산일출봉 <button class="detail-btn" onclick="openModal('성산일출봉', '커다란 사발 모양의 평평한 분화구를 지닌 세계자연유산입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>성산일출봉 <button class="detail-btn" onclick="openModal('성산일출봉', '커다란 사발 모양 분화구를 지닌 세계자연유산입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오후</div><div class="content">
-          <h4>윈드1947 카트체험 <button class="detail-btn" onclick="openModal('윈드1947 카트', '한라산 높이와 같은 1,947m의 국내 최장 레이싱 코스를 카트로 체험합니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>윈드1947 카트 <button class="detail-btn" onclick="openModal('윈드1947 카트', '한라산 높이 1,947m 코스의 레이싱 코스를 체험합니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오후</div><div class="content">
-          <h4>올레길 7코스 <button class="detail-btn" onclick="openModal('올레길 7코스 (외돌개)', '바다 위에 우뚝 솟아난 외돌개를 시작으로 제주의 자연을 걷는 코스입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>올레길 7코스 <button class="detail-btn" onclick="openModal('올레길 7코스 (외돌개)', '바다 위 외돌개를 시작으로 아름다운 해안 길을 걷습니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">저녁</div><div class="content">
           <h4>서귀포 올레시장 <button class="detail-btn" onclick="openModal('서귀포 올레시장', '석식은 자유식으로 진행되며, 현금 15,000원이 지급됩니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
@@ -295,19 +363,19 @@ header h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
       <!-- B팀 2일차 -->
       <div class="team-view team-b">
         <div class="timeline-item"><div class="time">오전</div><div class="content">
-          <h4>윈드1947 카트체험 <button class="detail-btn" onclick="openModal('윈드1947 카트', '한라산 높이와 같은 1,947m의 국내 최장 레이싱 코스를 카트로 체험합니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>윈드1947 카트 <button class="detail-btn" onclick="openModal('윈드1947 카트', '한라산 높이 1,947m 코스의 레이싱 코스를 체험합니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오후</div><div class="content">
           <h4>중식 [국수인가갈치인가] <button class="detail-btn" onclick="openModal('국수인가갈치인가', '<b>메뉴:</b> 삼색만두 + 고기국수 <span class=\'cite-hide\'>[cite: 7]</span><br><b>위치:</b> 서귀포시 성산읍 서성일로 913 <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오후</div><div class="content">
-          <h4>성산일출봉 <button class="detail-btn" onclick="openModal('성산일출봉', '커다란 사발 모양의 평평한 분화구를 지닌 세계자연유산입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>성산일출봉 <button class="detail-btn" onclick="openModal('성산일출봉', '커다란 사발 모양 분화구를 지닌 세계자연유산입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오후</div><div class="content">
-          <h4>제주라프 짚라인 <button class="detail-btn" onclick="openModal('제주라프 짚라인', '거문오름과 녹차밭 위를 가로지르며 짜릿한 스릴을 즐길 수 있는 액티비티입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>제주라프 짚라인 <button class="detail-btn" onclick="openModal('제주라프 짚라인', '거문오름과 녹차밭 위를 가로지르며 짜릿한 스릴을 즐기는 액티비티입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오후</div><div class="content">
-          <h4>올레길 7코스 <button class="detail-btn" onclick="openModal('올레길 7코스 (외돌개)', '바다 위에 우뚝 솟아난 외돌개를 시작으로 제주의 자연을 걷는 코스입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>올레길 7코스 <button class="detail-btn" onclick="openModal('올레길 7코스 (외돌개)', '바다 위 외돌개를 시작으로 아름다운 해안 길을 걷습니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">저녁</div><div class="content">
           <h4>서귀포 올레시장 <button class="detail-btn" onclick="openModal('서귀포 올레시장', '석식은 자유식으로 진행되며, 현금 15,000원이 지급됩니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
@@ -323,42 +391,33 @@ header h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
       <!-- A팀 3일차 -->
       <div class="team-view team-a">
         <div class="timeline-item"><div class="time">오전</div><div class="content">
-          <h4>제주라프 짚라인 <button class="detail-btn" onclick="openModal('제주라프 짚라인', '거문오름과 녹차밭 위를 가로지르며 짜릿한 스릴을 즐길 수 있는 액티비티입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>제주라프 짚라인 <button class="detail-btn" onclick="openModal('제주라프 짚라인', '거문오름과 녹차밭 위를 가로지르며 짜릿한 스릴을 즐기는 액티비티입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오전</div><div class="content">
-          <h4>4.3 평화공원 <button class="detail-btn" onclick="openModal('제주 4.3 평화공원', '제주 4.3 사건의 역사적 의미를 되새기고 희생자의 넋을 기리는 기념 공원입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>4.3 평화공원 <button class="detail-btn" onclick="openModal('제주 4.3 평화공원', '제주 4.3 사건의 의미를 되새기고 희생자의 넋을 기리는 평화 공원입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오후</div><div class="content">
           <h4>중식 [삼다정] <button class="detail-btn" onclick="openModal('메종글래드 삼다정', '<b>메뉴:</b> 5성급 호텔 프리미엄 런치 <span class=\'cite-hide\'>[cite: 7]</span><br><b>위치:</b> 제주시 노연로 80 <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
-        <div class="timeline-item"><div class="time">오후</div><div class="content"><h4>제주공항 → 김포공항</h4><p>수하물 점검 및 귀가 <span class="cite-hide">[cite: 7]</span></p></div></div>
+        <div class="timeline-item"><div class="time">오후</div><div class="content"><h4>제주공항 → 김포공항</h4><p>수하물 점검 및 복귀 <span class="cite-hide">[cite: 7]</span></p></div></div>
       </div>
       <!-- B팀 3일차 -->
       <div class="team-view team-b">
         <div class="timeline-item"><div class="time">오전</div><div class="content">
-          <h4>주상절리 <button class="detail-btn" onclick="openModal('제주 주상절리', '화산에서 분출한 용암이 식으면서 만들어낸 육각형 기둥 모양의 아름다운 해안 절경입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>주상절리 <button class="detail-btn" onclick="openModal('제주 주상절리', '화산 분출 후 육각형 기둥 모양으로 굳어진 아름다운 해안 절경입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오전</div><div class="content">
-          <h4>제주제트 <button class="detail-btn" onclick="openModal('제주제트', '안전조끼 착용이 필수이며, 주상절리 근처에서 스릴 있는 해상 액티비티를 체험합니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>제주제트 <button class="detail-btn" onclick="openModal('제주제트', '안전조끼 착용 필수! 주상절리 근처에서 스릴 있는 해상 액티비티를 체험합니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오후</div><div class="content">
           <h4>중식 [삼다정] <button class="detail-btn" onclick="openModal('메종글래드 삼다정', '<b>메뉴:</b> 5성급 호텔 프리미엄 런치 <span class=\'cite-hide\'>[cite: 7]</span><br><b>위치:</b> 제주시 노연로 80 <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">오후</div><div class="content">
-          <h4>4.3 평화공원 <button class="detail-btn" onclick="openModal('제주 4.3 평화공원', '제주 4.3 사건의 역사적 의미를 되새기고 희생자의 넋을 기리는 기념 공원입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>4.3 평화공원 <button class="detail-btn" onclick="openModal('제주 4.3 평화공원', '제주 4.3 사건의 의미를 되새기고 희생자의 넋을 기리는 평화 공원입니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
-        <div class="timeline-item"><div class="time">오후</div><div class="content"><h4>제주공항 → 김포공항</h4><p>수하물 점검 및 귀가 <span class="cite-hide">[cite: 7]</span></p></div></div>
+        <div class="timeline-item"><div class="time">오후</div><div class="content"><h4>제주공항 → 김포공항</h4><p>수하물 점검 및 복귀 <span class="cite-hide">[cite: 7]</span></p></div></div>
       </div>
     </div>
-  </div>
-
-  <!-- 5. 안전 규정 -->
-  <div class="warning-box">
-    <h4>🚨 항공기 반입 금지 물품 <span class="cite-hide">[cite: 7]</span></h4>
-    <ul>
-      <li><b>가지고 타는 짐 (기내):</b> 사무용 칼, 가위 등 날카로운 물품 소지 <b>불가</b> <span class="cite-hide">[cite: 7]</span></li>
-      <li><b>부치는 짐 (위탁):</b> 보조배터리, 노트북, 아이패드 소지 <b>불가</b> <span class="cite-hide">[cite: 7]</span><br><span style="font-size: 13px; color:var(--text-sub);">※ 보조배터리는 기내 소지만 가능하며, 위탁 수하물 보관 시 단속됩니다. <span class="cite-hide">[cite: 7]</span></span></li>
-    </ul>
   </div>
 </main>
 
@@ -369,9 +428,7 @@ header h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
       <h3 id="modalTitle">장소명</h3>
       <button class="close-btn" onclick="closeModal()">✕</button>
     </div>
-    <div class="modal-body" id="modalDesc">
-      설명 내용이 들어갑니다.
-    </div>
+    <div class="modal-body" id="modalDesc">설명 내용이 들어갑니다.</div>
     <div class="map-btn-group">
       <a href="#" target="_blank" class="map-btn naver" id="naverLink"><i class="fa-solid fa-map-location-dot"></i> 네이버 지도</a>
       <a href="#" target="_blank" class="map-btn google" id="googleLink"><i class="fa-brands fa-google"></i> 구글 지도</a>
@@ -380,6 +437,28 @@ header h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
 </div>
 
 <script>
+  // 테마 변경 로직 (라이트/다크)
+  const themeBtn = document.getElementById('theme-toggle');
+  const currentTheme = localStorage.getItem('theme') || 'light';
+  
+  // 저장된 테마 반영
+  document.documentElement.setAttribute('data-theme', currentTheme);
+  themeBtn.innerHTML = currentTheme === 'dark' ? '☀️ 라이트 모드' : '🌙 다크 모드';
+
+  // 버튼 클릭 시 테마 토글
+  themeBtn.addEventListener('click', () => {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      document.documentElement.setAttribute('data-theme', 'light');
+      themeBtn.innerHTML = '🌙 다크 모드';
+      localStorage.setItem('theme', 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      themeBtn.innerHTML = '☀️ 라이트 모드';
+      localStorage.setItem('theme', 'dark');
+    }
+  });
+
   // A/B 팀 전환
   function setTeam(team) {
     document.getElementById('main-wrap').setAttribute('data-team', team);
@@ -411,7 +490,6 @@ header h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
     document.getElementById('modalTitle').innerText = title;
     document.getElementById('modalDesc').innerHTML = desc;
     
-    // 검색어 정제 (정확도를 위해 공항이나 제주 특정 상호명 보정)
     let query = title;
     if(title.includes('MH')) query = '제주 MH컨벤션';
     if(title.includes('삼다정')) query = '제주 메종글래드 삼다정';
@@ -419,7 +497,6 @@ header h1 { font-size: 18px; font-weight: 800; margin-bottom: 12px; }
     if(title.includes('제주돈돗')) query = '제주돈돗 안덕점';
     
     const encodedQuery = encodeURIComponent(query);
-    
     document.getElementById('naverLink').href = `https://map.naver.com/p/search/${encodedQuery}`;
     document.getElementById('googleLink').href = `https://www.google.com/maps/search/?api=1&query=${encodedQuery}`;
     

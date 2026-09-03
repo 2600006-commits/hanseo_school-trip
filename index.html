@@ -48,6 +48,7 @@
   --warning-border: rgba(255, 59, 48, 0.3);
   --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
   --timeline-line: rgba(0, 0, 0, 0.1);
+  --ring-bg: #f4f6f9;
 }
 
 /* Dark Theme (그레이 다크 테마 - 약간 밝은 고급스러운 차콜 그레이) */
@@ -67,6 +68,7 @@
   --warning-border: rgba(255, 69, 58, 0.4);
   --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   --timeline-line: rgba(255, 255, 255, 0.15);
+  --ring-bg: #1e1f22;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -105,6 +107,29 @@ header h1 { font-size: var(--fs-lg); font-weight: 800; margin: 0; }
 .segment-btn { flex: 1; padding: 8px 0; text-align: center; font-size: var(--fs-sm); font-weight: 800; color: var(--text-main); border-radius: 8px; border: none; background: transparent; cursor: pointer; transition: all 0.25s; }
 .segment-btn.active { background: var(--segment-active); box-shadow: 0 3px 8px rgba(0,0,0,0.12); color: var(--accent); }
 
+/* Weather Widget (phone-widget style) */
+.weather-widget { display: flex; align-items: center; gap: 10px; background: var(--segment-bg); border-radius: 16px; padding: 9px 14px; margin: 0 auto 12px; max-width: 340px; cursor: pointer; transition: opacity 0.2s, transform 0.2s; border: 1px solid var(--glass-border); }
+.weather-widget:active { opacity: 0.7; transform: scale(0.99); }
+.weather-icon { font-size: 26px; flex-shrink: 0; line-height: 1; }
+.weather-info { display: flex; flex-direction: column; flex: 1; min-width: 0; text-align: left; }
+.weather-temp { font-size: var(--fs-md); font-weight: 800; line-height: 1.2; }
+.weather-desc { font-size: var(--fs-xs); color: var(--text-sub); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.weather-loc { font-size: var(--fs-xs); color: var(--text-sub); font-weight: 700; max-width: 96px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: right; flex-shrink: 0; }
+.weather-chevron { color: var(--text-sub); font-size: 11px; flex-shrink: 0; }
+
+/* Weather Modal */
+.weather-day-tabs { margin-bottom: 18px; }
+.hourly-scroll { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; margin: 0 -6vw; padding-left: 6vw; padding-right: 6vw; -webkit-overflow-scrolling: touch; }
+.hourly-scroll::-webkit-scrollbar { display: none; }
+.hour-item { flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; gap: 6px; background: var(--content-bg); padding: 12px 14px; border-radius: 14px; border: 1px solid var(--glass-border); min-width: 62px; }
+.hour-time { font-size: var(--fs-xs); color: var(--text-sub); font-weight: 700; }
+.hour-icon { font-size: 22px; }
+.hour-temp { font-size: var(--fs-sm); font-weight: 800; }
+.weather-current-summary { display: flex; align-items: center; gap: 14px; background: var(--content-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 4vw; margin-bottom: 20px; }
+.weather-current-summary .weather-icon { font-size: 40px; }
+.weather-current-summary .weather-current-temp { font-size: 28px; font-weight: 800; }
+.weather-current-summary .weather-current-desc { font-size: var(--fs-sm); color: var(--text-sub); font-weight: 700; }
+
 /* Common Cards */
 .glass-card { background: var(--glass-bg); backdrop-filter: blur(16px) saturate(180%); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 5vw; margin-top: 20px; box-shadow: var(--shadow); transition: background 0.3s; }
 .section-title { font-size: var(--fs-lg); font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
@@ -124,7 +149,7 @@ header h1 { font-size: var(--fs-lg); font-weight: 800; margin: 0; }
 .timeline-item:last-child { margin-bottom: 0; }
 .timeline-item::after { content: ''; position: absolute; left: calc(48px + 1.5vw); top: 24px; bottom: -20px; width: 2px; background: var(--timeline-line); border-radius: 1px; }
 .timeline-item:last-child::after { display: none; }
-.timeline-item::before { content: ''; position: absolute; left: calc(45.5px + 1.5vw); top: 10px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); z-index: 2; box-shadow: 0 0 0 3px var(--bg-gradient); }
+.timeline-item::before { content: ''; position: absolute; left: calc(45.5px + 1.5vw); top: 10px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); z-index: 2; box-shadow: 0 0 0 3px var(--ring-bg); }
 
 .time { width: 48px; font-size: var(--fs-sm); font-weight: 800; color: var(--accent); text-align: right; flex-shrink: 0; padding-top: 3px; }
 .content { flex: 1; background: var(--content-bg); padding: 4vw; border-radius: var(--radius-md); border: 1px solid var(--glass-border); min-width: 0;}
@@ -189,6 +214,15 @@ footer { text-align: center; padding: 40px 0; font-size: var(--fs-xs); color: va
   <div class="header-top">
     <h1>2학년 교육여행 <span class="cite-hide">[cite: 7]</span></h1>
     <button class="theme-toggle" id="theme-toggle">🌙 다크 모드</button>
+  </div>
+  <div class="weather-widget" id="weatherWidget" onclick="openWeatherModal()">
+    <div class="weather-icon" id="weatherIcon">⏳</div>
+    <div class="weather-info">
+      <div class="weather-temp" id="weatherTemp">--°</div>
+      <div class="weather-desc" id="weatherDesc">날씨 불러오는 중...</div>
+    </div>
+    <div class="weather-loc" id="weatherLoc">위치 확인 중</div>
+    <i class="fa-solid fa-chevron-right weather-chevron"></i>
   </div>
   <div class="segment-container">
     <button class="segment-btn active" id="btn-team-a" onclick="setTeam('A')">A팀 (1,2,4,5반) <span class="cite-hide">[cite: 7]</span></button>
@@ -322,7 +356,7 @@ footer { text-align: center; padding: 40px 0; font-size: var(--fs-xs); color: va
           <h4>서귀포 올레시장 <button class="detail-btn" onclick="openLocationModal('서귀포 올레시장', '석식은 자유식으로 진행되며, 현금 15,000원이 지급됩니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">야간</div><div class="content">
-          <h4>레크리에이션 <button class="detail-btn" onclick="openLocationModal('레크리에이션', '서귀포 켄싱턴 연회장으로 이동하여 레크리에이션 및 장기자랑, 간식타임을 진행합니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>레크리에이션 <button class="detail-btn" onclick="openLocationModal('레크리에이션', '서귀포 켄싱턴 연회장으로 이동하여 레크리에이션 및 장기자랑, 간식타임을 진행합니다. <span class=\'cite-hide\'>[cite: 7]</span>', false)">자세히</button></h4>
         </div></div>
       </div>
       <!-- B팀 2일차 -->
@@ -346,7 +380,7 @@ footer { text-align: center; padding: 40px 0; font-size: var(--fs-xs); color: va
           <h4>서귀포 올레시장 <button class="detail-btn" onclick="openLocationModal('서귀포 올레시장', '석식은 자유식으로 진행되며, 현금 15,000원이 지급됩니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
         </div></div>
         <div class="timeline-item"><div class="time">야간</div><div class="content">
-          <h4>레크리에이션 <button class="detail-btn" onclick="openLocationModal('레크리에이션', '서귀포 켄싱턴 연회장으로 이동하여 레크리에이션 및 장기자랑, 간식타임을 진행합니다. <span class=\'cite-hide\'>[cite: 7]</span>')">자세히</button></h4>
+          <h4>레크리에이션 <button class="detail-btn" onclick="openLocationModal('레크리에이션', '서귀포 켄싱턴 연회장으로 이동하여 레크리에이션 및 장기자랑, 간식타임을 진행합니다. <span class=\'cite-hide\'>[cite: 7]</span>', false)">자세히</button></h4>
         </div></div>
       </div>
     </div>
@@ -437,6 +471,27 @@ footer { text-align: center; padding: 40px 0; font-size: var(--fs-xs); color: va
   </div>
 </div>
 
+<!-- 날씨 상세 모달 -->
+<div class="modal-overlay" id="weatherModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>🌤️ 시간별 날씨</h3>
+      <button class="close-btn" onclick="closeWeatherModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="weather-current-summary" id="weatherCurrentSummary">
+        <div class="weather-icon">⏳</div>
+        <div>
+          <div class="weather-current-temp">--°</div>
+          <div class="weather-current-desc">불러오는 중...</div>
+        </div>
+      </div>
+      <div class="segment-container weather-day-tabs" id="weatherDayTabs"></div>
+      <div class="hourly-scroll" id="weatherHourlyList"></div>
+    </div>
+  </div>
+</div>
+
 <!-- 반입 금지 물품 모달 -->
 <div class="modal-overlay" id="prohibitedModal">
   <div class="modal-content">
@@ -509,20 +564,25 @@ footer { text-align: center; padding: 40px 0; font-size: var(--fs-xs); color: va
   });
 
   // 장소 팝업 모달 & 지도 링크
-  function openLocationModal(title, desc) {
+  function openLocationModal(title, desc, showMap = true) {
     document.getElementById('locationModalTitle').innerText = title;
     document.getElementById('locationModalDesc').innerHTML = desc;
-    
-    let query = title;
-    if(title.includes('MH')) query = '제주 MH컨벤션';
-    if(title.includes('삼다정')) query = '제주 메종글래드 삼다정';
-    if(title.includes('국수인가')) query = '제주 국수인가갈치인가';
-    if(title.includes('제주돈돗')) query = '제주돈돗 안덕점';
-    
-    const encodedQuery = encodeURIComponent(query);
-    document.getElementById('naverLink').href = `https://map.naver.com/p/search/${encodedQuery}`;
-    document.getElementById('googleLink').href = `https://www.google.com/maps/search/?api=1&query=${encodedQuery}`;
-    
+
+    const mapGroup = document.querySelector('#locationModal .map-btn-group');
+    mapGroup.style.display = showMap ? 'flex' : 'none';
+
+    if (showMap) {
+      let query = title;
+      if(title.includes('MH')) query = '제주 MH컨벤션';
+      if(title.includes('삼다정')) query = '제주 메종글래드 삼다정';
+      if(title.includes('국수인가')) query = '제주 국수인가갈치인가';
+      if(title.includes('제주돈돗')) query = '제주돈돗 안덕점';
+
+      const encodedQuery = encodeURIComponent(query);
+      document.getElementById('naverLink').href = `https://map.naver.com/p/search/${encodedQuery}`;
+      document.getElementById('googleLink').href = `https://www.google.com/maps/search/?api=1&query=${encodedQuery}`;
+    }
+
     document.getElementById('locationModal').classList.add('open');
     document.body.classList.add('modal-open');
   }
@@ -550,6 +610,154 @@ footer { text-align: center; padding: 40px 0; font-size: var(--fs-xs); color: va
   document.getElementById('prohibitedModal').addEventListener('click', function(e) {
     if (e.target === this) closeProhibitedModal();
   });
+  document.getElementById('weatherModal').addEventListener('click', function(e) {
+    if (e.target === this) closeWeatherModal();
+  });
+
+  // ===== 날씨 위젯 (GPS 위치 기반, Open-Meteo API 사용 / API 키 불필요) =====
+  const WEATHER_CODE_MAP = {
+    0: ['☀️', '맑음'], 1: ['🌤️', '대체로 맑음'], 2: ['⛅', '구름 조금'], 3: ['☁️', '흐림'],
+    45: ['🌫️', '안개'], 48: ['🌫️', '짙은 안개'],
+    51: ['🌦️', '약한 이슬비'], 53: ['🌦️', '이슬비'], 55: ['🌧️', '강한 이슬비'],
+    56: ['🌧️', '언 이슬비'], 57: ['🌧️', '강한 언 이슬비'],
+    61: ['🌧️', '약한 비'], 63: ['🌧️', '비'], 65: ['🌧️', '강한 비'],
+    66: ['🌨️', '언 비'], 67: ['🌨️', '강한 언 비'],
+    71: ['🌨️', '약한 눈'], 73: ['🌨️', '눈'], 75: ['❄️', '강한 눈'], 77: ['❄️', '싸락눈'],
+    80: ['🌦️', '약한 소나기'], 81: ['🌧️', '소나기'], 82: ['⛈️', '강한 소나기'],
+    85: ['🌨️', '약한 눈소나기'], 86: ['❄️', '강한 눈소나기'],
+    95: ['⛈️', '뇌우'], 96: ['⛈️', '우박 동반 뇌우'], 99: ['⛈️', '강한 우박 동반 뇌우']
+  };
+  const WEATHER_DAY_LABELS = ['오늘', '내일', '모레'];
+  let weatherHourlyByDay = {};
+
+  function weatherCodeInfo(code) {
+    return WEATHER_CODE_MAP[code] || ['🌡️', '정보 없음'];
+  }
+
+  function initWeather() {
+    // 제주 교육여행 페이지이므로, 위치 권한이 없거나 실패하면 제주도 날씨로 대체 표시
+    const fallback = { lat: 33.4996, lon: 126.5312, name: '제주도' };
+
+    if (!navigator.geolocation) {
+      fetchWeather(fallback.lat, fallback.lon, fallback.name);
+      return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+      async (pos) => {
+        const { latitude, longitude } = pos.coords;
+        const locName = await reverseGeocode(latitude, longitude);
+        fetchWeather(latitude, longitude, locName);
+      },
+      () => {
+        // 권한 거부/오류 시 제주도 날씨로 대체
+        fetchWeather(fallback.lat, fallback.lon, fallback.name + ' (기본)');
+      },
+      { timeout: 8000, maximumAge: 600000 }
+    );
+  }
+
+  async function reverseGeocode(lat, lon) {
+    try {
+      const res = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=ko`);
+      const data = await res.json();
+      return data.locality || data.city || data.principalSubdivision || '내 위치';
+    } catch (e) {
+      return '내 위치';
+    }
+  }
+
+  async function fetchWeather(lat, lon, locName) {
+    try {
+      const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=temperature_2m,weathercode&timezone=auto&forecast_days=3`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('weather fetch failed');
+      const data = await res.json();
+      renderCurrentWeather(data.current_weather, locName);
+      groupHourlyByDay(data.hourly);
+      renderWeatherModal(data.current_weather, locName);
+    } catch (e) {
+      document.getElementById('weatherIcon').innerText = '⚠️';
+      document.getElementById('weatherTemp').innerText = '-°';
+      document.getElementById('weatherDesc').innerText = '날씨 정보를 불러올 수 없어요';
+      document.getElementById('weatherLoc').innerText = locName || '';
+    }
+  }
+
+  function renderCurrentWeather(current, locName) {
+    const [icon, desc] = weatherCodeInfo(current.weathercode);
+    document.getElementById('weatherIcon').innerText = icon;
+    document.getElementById('weatherTemp').innerText = Math.round(current.temperature) + '°';
+    document.getElementById('weatherDesc').innerText = desc;
+    document.getElementById('weatherLoc').innerText = locName;
+  }
+
+  function groupHourlyByDay(hourly) {
+    weatherHourlyByDay = {};
+    hourly.time.forEach((t, i) => {
+      const date = t.split('T')[0];
+      if (!weatherHourlyByDay[date]) weatherHourlyByDay[date] = [];
+      weatherHourlyByDay[date].push({
+        time: t.split('T')[1],
+        temp: hourly.temperature_2m[i],
+        code: hourly.weathercode[i]
+      });
+    });
+  }
+
+  function hourLabel(hour) {
+    if (hour === 0) return '자정';
+    if (hour === 12) return '정오';
+    return hour < 12 ? `오전 ${hour}시` : `오후 ${hour - 12}시`;
+  }
+
+  function renderHourlyList(date) {
+    const items = weatherHourlyByDay[date] || [];
+    return items.map(item => {
+      const [icon] = weatherCodeInfo(item.code);
+      const hour = parseInt(item.time.split(':')[0], 10);
+      return `<div class="hour-item"><div class="hour-time">${hourLabel(hour)}</div><div class="hour-icon">${icon}</div><div class="hour-temp">${Math.round(item.temp)}°</div></div>`;
+    }).join('');
+  }
+
+  function renderWeatherModal(current, locName) {
+    const days = Object.keys(weatherHourlyByDay).slice(0, 3);
+    const tabsHtml = days.map((d, i) => {
+      const dateObj = new Date(d);
+      const label = WEATHER_DAY_LABELS[i] || `${dateObj.getMonth() + 1}/${dateObj.getDate()}`;
+      return `<button class="segment-btn weather-day-btn ${i === 0 ? 'active' : ''}" onclick="switchWeatherDay('${d}', this)">${label}</button>`;
+    }).join('');
+    document.getElementById('weatherDayTabs').innerHTML = tabsHtml;
+    document.getElementById('weatherHourlyList').innerHTML = renderHourlyList(days[0]);
+
+    if (current) {
+      const [icon, desc] = weatherCodeInfo(current.weathercode);
+      document.getElementById('weatherCurrentSummary').innerHTML = `
+        <div class="weather-icon">${icon}</div>
+        <div>
+          <div class="weather-current-temp">${Math.round(current.temperature)}°</div>
+          <div class="weather-current-desc">${locName} · ${desc}</div>
+        </div>`;
+    }
+  }
+
+  function switchWeatherDay(date, btn) {
+    document.querySelectorAll('.weather-day-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('weatherHourlyList').innerHTML = renderHourlyList(date);
+  }
+
+  function openWeatherModal() {
+    document.getElementById('weatherModal').classList.add('open');
+    document.body.classList.add('modal-open');
+  }
+
+  function closeWeatherModal() {
+    document.getElementById('weatherModal').classList.remove('open');
+    document.body.classList.remove('modal-open');
+  }
+
+  initWeather();
 </script>
 </body>
 </html>
